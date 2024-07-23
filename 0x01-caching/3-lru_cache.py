@@ -28,7 +28,7 @@ class LRUCache(BaseCaching):
         cache = self.cache_data
         if (key is None or item is None):
             pass
-        if (len(cache) >= BaseCaching.MAX_ITEMS and key not in cache):
+        if (len(cache) > BaseCaching.MAX_ITEMS and key not in cache):
             print('DISCARD: {}'.format(self.keys[0]))
             cache.pop(self.keys.pop(0))
 
