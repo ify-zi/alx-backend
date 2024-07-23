@@ -20,7 +20,6 @@ class BasicCache(BaseCaching):
         """insertion function into the cache"""
         if key or item is None:
             self.cache_data[str(key)] = item
-        return
 
     def get(self, key):
         """
