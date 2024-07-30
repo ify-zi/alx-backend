@@ -21,6 +21,7 @@ app = Flask(__name__)
 babel.init_app(app)
 app.config.from_object(Config)
 
+
 @app.route('/', strict_slashes=False)
 def greet():
     """return index from template"""
