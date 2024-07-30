@@ -26,7 +26,7 @@ users = {
 }
 
 
-def get_user():
+def get_user() -> dict:
     """Gets user by user_id from user data table"""
     keys = users.keys()
     user_id = request.args.get('login_as')
@@ -37,13 +37,13 @@ def get_user():
 
 
 @app.before_request
-def before_request():
+def before_request() -> None:
     """Set user as global on flask.g.user"""
     g.user = get_user()
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> str:
     """gets locale best match nased off config"""
     locales = app.config['LANGUAGES']
     locale = request.args.get('locale')
@@ -57,7 +57,7 @@ def get_locale():
 
 
 @app.route('/', strict_slashes=False)
-def index():
+def index() -> str:
     """return homepage index route"""
     return render_template('6-index.html')
 
