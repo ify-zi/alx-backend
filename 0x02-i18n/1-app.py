@@ -5,7 +5,7 @@
 
 from flask import Flask, render_template
 from flask_babel import Babel
-from pytx import UTC
+from pytz import UTC
 
 
 class Config(object):
@@ -27,4 +27,4 @@ def greet():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="localhost", port=5000)
