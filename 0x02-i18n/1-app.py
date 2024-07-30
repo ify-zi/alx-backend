@@ -8,16 +8,18 @@ from flask_babel import Babel
 from pytz import UTC
 
 
-class Config:
+class Config(object):
     """default parameters in babel"""
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_TIMEZONE = 'UTC'
     BABEL_DEFAULT_LOCALE = 'en'
 
 
+babel = Babel()
+
 app = Flask(__name__)
-babel = Babel(app)
-app.config.from_object('Config')
+babel.init_app(app)
+app.config.from_object(Config)
 
 @app.route('/', strict_slashes=False)
 def greet():
