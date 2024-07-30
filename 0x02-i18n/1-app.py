@@ -17,7 +17,7 @@ app.config['BABEL_DEFAULT_LOCALE'] = 'en'
 @app.route('/', strict_slashes=False)
 def greet():
     """return index from template"""
-    return render_template('0-index.html')
+    return render_template('1-index.html')
 
 
 if __name__ == '__main__':
