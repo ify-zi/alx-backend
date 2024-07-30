@@ -1,21 +1,22 @@
 #!/usr/bin/env python3
-""" 2. get local from request """
+""" Module definition """
+
 from flask import Flask, render_template, request, g
-from flask_babel import Babel
+from flask_babel import Babel, _
+from pytz import UTC
 
 
-class Config:
-    """ Config class for app """
-    LANGUAGES = ["en", "fr"]
-    BABEL_DEFAULT_LOCALE = "en"
-    BABEL_DEFAULT_TIMEZONE = "UTC"
+class Config(object):
+    """ Config class foe flask_babel instance """
+    LANGUAGES = ['en', 'fr']
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
 
 
 app = Flask(__name__)
 app.config.from_object(Config)
-app.url_map.strict_slashes = False
-babel = Babel(app)
 
+babel = Babel(app)
 
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
@@ -25,38 +26,41 @@ users = {
 }
 
 
-def get_user(login_as: str) -> dict:
-    """ Get user from users """
-    return users.get(int(login_as), None)
+def get_user():
+    """ Gets user by user_id from user data table """
+    keys = users.keys()
+    user_id = request.args.get('login_as')
+
+    if user_id:
+        return users.get(int(user_id))
+    return None
 
 
 @app.before_request
-def before_request() -> None:
-    """ Before request """
-    user = get_user(request.args.get('login_as'))
-    if user:
-        g.user = user
+def before_request():
+    """ Set user as global on flask.g.user"""
+    g.user = get_user()
 
 
 @babel.localeselector
-def get_locale() -> str:
-    """ Get locale from request """
+def get_locale():
+    """ gets locale best match nased off config """
+    locales = app.config['LANGUAGES']
     locale = request.args.get('locale')
-    if locale and locale in app.config["LANGUAGES"]:
-        return locale
-    if g.user and g.user.get('locale') in app.config["LANGUAGES"]:
+
+    if g.user is not None and g.user.get('locale') in locales:
         return g.user.get('locale')
-    header_locale = request.headers.get('locale')
-    if header_locale and header_locale in app.config["LANGUAGES"]:
-        return header_locale
-    return request.accept_languages.best_match(app.config["LANGUAGES"])
+
+    if locale and locale in locales:
+        return locale
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-@app.route("/")
-def welcome() -> str:
-    """ / page """
+@app.route('/', strict_slashes=False)
+def index():
+    """ index route """
     return render_template('6-index.html')
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    app.run(port="5000", host="0.0.0.0", debug=True)
