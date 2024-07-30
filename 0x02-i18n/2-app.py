@@ -20,9 +20,10 @@ app.config.from_object(Config)
 
 
 @babel.localeselector
-def get_locale()-> str:
+def get_locale() -> str:
     """get the best match for language"""
     return request.accept_languages.best_match(app.config["LANGUAGES"])
+
 
 @app.route('/', strict_slashes=False)
 def greet():
