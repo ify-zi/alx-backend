@@ -7,6 +7,7 @@ from flask import Flask, render_template
 from flask_babel import Babel
 from pytx import UTC
 
+
 class Config(object):
     """default parameters in babel"""
     LANGUAGES = ['en', 'fr']
@@ -26,4 +27,4 @@ def greet():
 
 
 if __name__ == '__main__':
-    app.run(host="localhost", port=5000)
+    app.run(host="0.0.0.0", port=5000)
