@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Module definition """
+"""Task #6 Module definition """
 
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, _
@@ -7,7 +7,7 @@ from pytz import UTC
 
 
 class Config(object):
-    """ Config class foe flask_babel instance """
+    """Config class for flask_babel instance"""
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
@@ -27,7 +27,7 @@ users = {
 
 
 def get_user():
-    """ Gets user by user_id from user data table """
+    """Gets user by user_id from user data table"""
     keys = users.keys()
     user_id = request.args.get('login_as')
 
@@ -38,13 +38,13 @@ def get_user():
 
 @app.before_request
 def before_request():
-    """ Set user as global on flask.g.user"""
+    """Set user as global on flask.g.user"""
     g.user = get_user()
 
 
 @babel.localeselector
 def get_locale():
-    """ gets locale best match nased off config """
+    """gets locale best match nased off config"""
     locales = app.config['LANGUAGES']
     locale = request.args.get('locale')
 
@@ -58,9 +58,9 @@ def get_locale():
 
 @app.route('/', strict_slashes=False)
 def index():
-    """ index route """
+    """return homepage index route"""
     return render_template('6-index.html')
 
 
 if __name__ == "__main__":
-    app.run(port="5000", host="0.0.0.0", debug=True)
+    app.run(port="5000", host="0.0.0.0")
