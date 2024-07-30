@@ -8,7 +8,7 @@ from flask_babel import Babel
 from pytz import UTC
 
 
-class Config(object):
+class Config:
     """default parameters in babel"""
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_TIMEZONE = 'UTC'
