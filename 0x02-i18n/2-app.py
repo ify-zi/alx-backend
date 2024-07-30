@@ -15,10 +15,8 @@ class Config(object):
     BABEL_DEFAULT_LOCALE = 'en'
 
 
-babel = Babel()
-
 app = Flask(__name__)
-babel.init_app(app)
+babel = Babel(app)
 app.config.from_object(Config)
 
 
